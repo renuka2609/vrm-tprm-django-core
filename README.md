@@ -3,7 +3,7 @@
 Django + DRF backend foundation for a multi-tenant assessment platform with RBAC, audit logging, and workflow enforcement.
 
 ## Modules
-- Assessments – assign, list, detail, template lock
+- Assessments – assign, list, detail, template lock   
 - Responses – draft save, final submit, lock
 - Evidence – upload, map to question, expiry, download
 - Reviews – reviewer decision, scoring trigger
