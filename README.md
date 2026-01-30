@@ -1,68 +1,37 @@
-# VRM / TPRM Django Backend
+# Django Backend – P0 Modules + Dashboard
 
-Django REST Framework backend for a Vendor Risk Management (VRM) / Third-Party Risk Management (TPRM) platform.  
-Implements multi-tenant architecture, RBAC, Vendors module, Templates with versioning, audit logs, and scoring service integration hooks.
+Django + DRF backend foundation for a multi-tenant assessment platform with RBAC, audit logging, and workflow enforcement.
 
-### Templates
-- Template create
-- Template version creation
-- Template list & detail
-- Version locked view
-- Section & question structure
-- Version immutability enforcement
-- Audit events for create/version/publish/archive
+## Modules
+- Assessments – assign, list, detail, template lock
+- Responses – draft save, final submit, lock
+- Evidence – upload, map to question, expiry, download
+- Reviews – reviewer decision, scoring trigger
+- Remediations – create, vendor response, closure
+- Dashboard – stats + activity feed
+- Audit Logs – all critical actions tracked
 
----
+## Security
+- RBAC permissions
+- Tenant isolation
+- Cross-tenant blocked (403)
+- Invalid transitions (409)
 
-## 🛠 Tech Stack
+## Setup
+python -m venv venv  
+venv\Scripts\activate  
+pip install -r requirements.txt  
+python manage.py migrate  
+python manage.py createsuperuser  
+python manage.py runserver  
 
-- Python
-- Django
-- Django REST Framework
-- PostgreSQL
-- Docker & Docker Compose
-- Celery (background jobs ready)
-- Redis
-- MinIO (evidence storage ready)
-- OpenAPI / Swagger
+## APIs
+- `/dashboard/stats/` → counts summary
+- `/dashboard/activity/` → audit activity feed
+- Swagger → `/swagger/`
 
----
-
-## 🔗 Key API Endpoints
-
-### Vendors
-```
-POST   /vendors
-GET    /vendors
-GET    /vendors/{id}
-PUT    /vendors/{id}
-PATCH  /vendors/{id}
-```
-
-### Templates
-```
-POST   /templates
-POST   /templates/{id}/versions
-GET    /templates
-GET    /templates/{id}
-GET    /templates/{id}/versions/{version_id}
-```
-
----
-
-## 🔌 Scoring Integration (Wired)
-
-Trigger points added for:
-- Assessment submission
-- Reviewer approval
-- Remediation closure
-
-Handles timeout and safe failure behavior.
-
----
-
-## 📌 Project Status
-
-Core backend foundation complete.  
-Vendors + Templates modules implemented end-to-end with RBAC, tenant isolation, and audit logs.
-
+## Notes
+- Always filter by tenant_id  
+- Enforce roles on every endpoint  
+- Log audit events for write actions  
+- Lock records after final submission  
