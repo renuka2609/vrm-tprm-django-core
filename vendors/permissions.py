@@ -1,8 +1,0 @@
-from rest_framework.permissions import BasePermission
-
-
-class CanCreateVendor(BasePermission):
-    def has_permission(self, request, view):
-        if view.action == "create":
-            return request.user.role in ["admin", "requester"]
-        return True
